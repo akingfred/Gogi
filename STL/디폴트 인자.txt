@@ -1,0 +1,19 @@
+#include <iostream>
+class Sum {
+	int first;
+	int second;
+public :
+	Sum(int first = 10 ,int second = 11) { // 디폴트 인자는 처음 선언한 변수부터 오른쪽으로는 모두 디폴트값을 줘야한다.
+		this->first = first; //this 는 해당 클래스의 주소가 들어있는 포인터다
+		this->second = second;
+	}
+	int plus() {
+		return first + second;
+	}
+};
+int main(void) {
+	Sum sum; // 생성자를 호출하지 않아도 해당 객체에는 디폴트 값이 지정되있다.
+	int result = sum.plus();
+	std::cout << result << std::endl;
+	return 0;
+}

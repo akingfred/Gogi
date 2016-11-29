@@ -1,0 +1,9 @@
+#include <iostream>
+int num = 11;
+
+int main(void) {
+	int num = 13;
+	std::cout <<  "지역변수 : " << num << std::endl;
+	std::cout << "내부의 전역변수 : " << ::num << std::endl;
+
+}

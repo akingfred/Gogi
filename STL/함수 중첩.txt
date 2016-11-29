@@ -1,0 +1,29 @@
+#include <iostream>
+
+int sum(int firstNum, int secondNum);
+double sum(double firstNum, double secondNum);
+float sum(float firstNum, float secondNum);
+
+int main(void) {
+	int I_first = 10, I_second = 10;
+	float F_first = 5.0f, F_second = 6.0f;
+	double D_first = 11.0, D_second = 5.0;
+
+	int I_result = sum(I_first, I_second);
+	float F_result = sum(F_first, F_second);
+	double D_result = sum(D_first, D_second);
+
+	std::cout << "°á°ú : " << I_result << " " << F_result << " " << D_result << std::endl;
+
+	return 0;
+}
+
+int sum(int firstNum, int secondNum) {
+	return firstNum + secondNum;
+}
+float sum(float firstNum, float secondNum) {
+	return firstNum + secondNum;
+}
+double sum(double firstNum, double secondNum) {
+	return firstNum + secondNum;
+}

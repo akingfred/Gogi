@@ -1,0 +1,11 @@
+#include <iostream>
+
+int main(void) {
+	char *str = new char[20]; //공간할당을 해주지 않을시에 오버플로우나서 에러가 난다.
+							//만약 char *str 만 해주면 str변수는 주소를 받을 준비를 하는데 문자열이 밀려들어와서
+							//공간 부족으로 에러를 발생시킨다.
+	std::cout << "문자열 입력 : ";
+	std::cin >> str;
+	std::cout << str << std::endl;
+	return 0;
+}
