@@ -1,0 +1,41 @@
+#include <iostream>
+#include <list>
+#include <vector>
+
+int main(void) {
+	//list 는 노드로 연결되있기 때문에 앞에다가도 값을 추가해서 연결이 가능하다.
+	//또 모든 컨테이너는 정방향과 달리 끝과 시작을 가리키는 반복자 쌍을 제공한다.
+
+	//std::vector<int> vec;
+	std::list<int> list;
+	list.push_back(1);
+	list.push_back(2);
+	list.push_back(3);
+	list.push_back(4);
+	
+	//정방향 순회
+	std::list<int>::iterator iter;
+	for (iter = list.begin(); iter != list.end(); iter++) {
+		std::cout << *iter << " ";
+	}
+	std::cout << std::endl;
+
+	//값을 앞에닥 추가시킨다.
+	list.push_front(10);
+	for (iter = list.begin(); iter != list.end(); iter++) {
+		std::cout << *iter << " ";
+	}
+	std::cout << std::endl;
+	list.push_front(20);
+	for (iter = list.begin(); iter != list.end(); iter++) {
+		std::cout << *iter << " ";
+	}
+	std::cout << std::endl;
+
+	//reverse_Iterator (뒤에서 앞으로 순회)
+	std::list<int>::reverse_iterator rIter;
+	for (rIter = list.rbegin(); rIter != list.rend(); rIter++) {
+		std::cout << *rIter << " ";
+	}
+	return 0;
+}
