@@ -1,0 +1,45 @@
+#define _WINSOCK_DEPRECATED_NO_WARNINGS
+
+#include <iostream>
+#include <winsock2.h>
+
+int main(int argc, char* argv[])
+{
+	WSADATA wsaData;
+	SOCKET hSocket;
+	SOCKADDR_IN servAddr;
+
+	char message[30];
+	int strLen;
+	if (argc != 3) {
+		exit(1);
+	}
+	if (WSAStartup(MAKEWORD(2, 2), &wsaData) != 0) {
+		std::cout << "WSAStartup() error!" << std::endl;
+	}
+
+	hSocket = socket(PF_INET, SOCK_STREAM, 0);
+	if (hSocket == INVALID_SOCKET) {
+		std::cout << "socket() error!" << std::endl;
+	}
+
+	memset(&servAddr, 0, sizeof(servAddr));
+	servAddr.sin_family = AF_INET;
+	servAddr.sin_addr.S_un.S_addr = inet_addr(argv[1]);
+	servAddr.sin_port = htons(atoi(argv[2]));
+
+	if (connect(hSocket, (SOCKADDR*)&servAddr, sizeof(servAddr)) == SOCKET_ERROR) {
+		std::cout << "connect() error!" << std::endl;
+	}
+
+	strLen = recv(hSocket, message, sizeof(message) - 1, 0);
+	if (strLen == -1) {
+		std::cout << "read() error!" << std::endl;
+	}
+
+	std::cout << "Message from server:" << message << std::endl;
+
+	closesocket(hSocket);
+	WSACleanup();
+	return 0;
+}

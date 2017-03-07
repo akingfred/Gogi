@@ -1,0 +1,48 @@
+#include <iostream>
+#include <stdlib.h>
+#include <winsock2.h>
+
+int main(int argc, char* argv[])
+{
+	WSADATA wsaData;
+	SOCKET hServSock, hClntSock;
+	SOCKADDR_IN servAddr, clntAddr;
+
+	int szClntAddr;
+	char message[] = "Hello World!";
+	
+	if (WSAStartup(MAKEWORD(2, 2), &wsaData) != 0) { //WSAStartup 윈속 초기화함수
+													 //MAKEWORD WORD형 버전정보를 리턴 2, 2 => 주버전2, 부버전2
+		std::cout<<"WSAStartup() error!"<<std::endl;
+	}
+
+	hServSock = socket(PF_INET, SOCK_STREAM, 0);
+	if (hServSock == INVALID_SOCKET) {
+		std::cout << "socket() error!" << std::endl;
+	}
+
+	memset(&servAddr, 0, sizeof(servAddr));
+	servAddr.sin_family = AF_INET;
+	servAddr.sin_addr.S_un.S_addr = htonl(INADDR_ANY);
+	servAddr.sin_port = htons(atoi(argv[1]));
+
+	if (bind(hServSock, (SOCKADDR*)&servAddr, sizeof(servAddr)) == SOCKET_ERROR) {
+		std::cout << "bind() error!" << std::endl;
+	}
+
+	if (listen(hServSock, 5) == SOCKET_ERROR) {
+		std::cout << "listen() error!" << std::endl;
+	}
+
+	szClntAddr = sizeof(clntAddr);
+	hClntSock = accept(hServSock, (SOCKADDR*)&clntAddr, &szClntAddr);
+	if (hClntSock == INVALID_SOCKET) {
+		std::cout << "accept() error!" << std::endl;
+	}
+
+	send(hClntSock, message, sizeof(message), 0);
+	closesocket(hClntSock);
+	closesocket(hServSock);
+	WSACleanup();//윈속 해제
+	return 0;
+}
